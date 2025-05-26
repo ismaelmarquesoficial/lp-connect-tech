@@ -2,7 +2,6 @@
 
 import styled from 'styled-components';
 import Header from '@/components/Header';
-import ChatSimulation from '@/components/ChatSimulation';
 import BenefitsSection from '@/components/BenefitsSection';
 import AdditionalBenefits from '@/components/AdditionalBenefits';
 import ExclusiveBonus from '@/components/ExclusiveBonus';
@@ -76,7 +75,6 @@ export default function Home() {
     <PageContainer>
       <MainContent>
         <Header />
-        <ChatSimulation />
         <RobotTransition />
         <section id="benefits-section">
           <BenefitsSection />

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import colors from '../styles/colors';
 
-const StyledButton = styled(motion.button)`
+const StyledButton = styled.button`
   padding: ${props => props.$primary ? '1rem 2.5rem' : '0.9rem 2rem'};
   font-size: 1rem;
   font-weight: 600;
@@ -40,14 +40,8 @@ const StyledButton = styled(motion.button)`
 
 const AnimatedButton = ({ children, primary, ...props }) => {
   return (
-    <StyledButton
-      $primary={primary}
-      whileHover={{ 
-        scale: 1.03,
-        y: -2,
-        transition: { duration: 0.2 }
-      }}
-      whileTap={{ scale: 0.97 }}
+    <motion.div
+      style={{ display: 'inline-block' }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ 
         opacity: 1, 
@@ -58,10 +52,20 @@ const AnimatedButton = ({ children, primary, ...props }) => {
           damping: 30
         }
       }}
-      {...props}
+      whileHover={{ 
+        scale: 1.03,
+        y: -2,
+        transition: { duration: 0.2 }
+      }}
+      whileTap={{ scale: 0.97 }}
     >
-      {children}
-    </StyledButton>
+      <StyledButton
+        $primary={primary}
+        {...props}
+      >
+        {children}
+      </StyledButton>
+    </motion.div>
   );
 };
 

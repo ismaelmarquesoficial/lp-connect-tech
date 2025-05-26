@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import colors from '../styles/colors';
 import { Section, Container } from './layout/Section';
 import ScrollReveal from './ScrollReveal';
+import AnimatedIcon from './AnimatedIcon';
 
 const Title = styled.h2`
   font-size: clamp(1.8rem, 4vw, 2.5rem);
@@ -64,7 +65,7 @@ const PricingCard = styled(motion.div)`
   isolation: isolate;
   transition: all 0.3s ease;
 
-  ${props => props.featured && `
+  ${props => props.$featured && `
     background: rgba(0, 0, 0, 0.9);
     box-shadow: 0 8px 32px ${colors.primary}30;
     
@@ -96,35 +97,9 @@ const PricingCard = styled(motion.div)`
     }
   `}
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    background: linear-gradient(
-      90deg,
-      ${colors.primary}60,
-      ${colors.primary}80,
-      ${colors.primary}60
-    );
-    border-radius: inherit;
-    -webkit-mask: 
-      linear-gradient(#fff 0 0) content-box, 
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0.8;
-  }
-
-  &:hover::before {
-    background: linear-gradient(
-      90deg,
-      ${colors.primary}80,
-      ${colors.primary},
-      ${colors.primary}80
-    );
-    opacity: 1;
-  }
+  ${props => props.$promotion && `
+    border: 2px solid ${colors.secondary};
+  `}
 `;
 
 const PriceTag = styled.div`
@@ -151,6 +126,21 @@ const PriceTag = styled.div`
       margin-top: 0.2rem;
     }
   }
+
+  .promo-below {
+    display: inline-block;
+    margin-top: 0.4rem;
+    background: ${colors.secondary};
+    color: ${colors.white};
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.15rem 1.1rem;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    border: 1px solid ${colors.secondary};
+  }
 `;
 
 const PlanTitle = styled.h3`
@@ -164,33 +154,61 @@ const PlanTitle = styled.h3`
 `;
 
 const FeatureList = styled.div`
-  margin: 0.8rem 0;
+  margin: 1.2rem 0 0.8rem 0;
   text-align: left;
   padding: 0 0.5rem;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
 `;
 
 const FeatureItem = styled(motion.div)`
   color: ${colors.white};
-  font-size: 0.8rem;
-  margin-bottom: 0.4rem;
+  font-size: 1rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.7rem;
+  background: none;
+  border: none;
+  padding: 0;
 
-  &::before {
-    content: '•';
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: ${colors.primary}20;
+    border-radius: 50%;
     color: ${colors.primary};
-    font-size: 1rem;
+    font-size: 1.1rem;
+    margin-right: 0.2rem;
   }
 
   .title {
     font-weight: 600;
     margin-right: 0.3rem;
+    color: ${colors.white};
   }
 
   .description {
     opacity: 0.8;
+    font-size: 0.95rem;
+    color: ${colors.whiteTransparent};
+  }
+
+  .badge {
+    background: ${colors.secondary};
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 0.1rem 0.6rem;
+    margin-left: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px ${colors.secondary}30;
   }
 `;
 
@@ -199,7 +217,7 @@ const PricingButton = styled(motion.button)`
   padding: 0.7rem;
   border: none;
   border-radius: 8px;
-  background: ${props => props.featured ? colors.primary : 'rgba(255, 255, 255, 0.1)'};
+  background: ${props => props.$featured ? colors.primary : props.$promotion ? colors.secondary : 'rgba(255, 255, 255, 0.1)'};
   color: ${colors.white};
   font-size: 0.9rem;
   font-weight: 600;
@@ -214,12 +232,22 @@ const PricingButton = styled(motion.button)`
   text-decoration: none;
   transition: all 0.3s ease;
 
-  ${props => props.featured && `
+  ${props => props.$featured && `
     background: ${colors.primary};
     box-shadow: 0 4px 15px ${colors.primary}50;
     
     &:hover {
       background: ${colors.primaryLight};
+      transform: translateY(-2px);
+    }
+  `}
+
+  ${props => props.$promotion && `
+    background: ${colors.secondary};
+    box-shadow: 0 4px 15px ${colors.secondary}50;
+    
+    &:hover {
+      background: ${colors.secondaryLight};
       transform: translateY(-2px);
     }
   `}
@@ -255,54 +283,43 @@ const TitleContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
+const sharedBenefits = [
+  "WhatsApp Business",
+  "Mercado Pago",
+  "Cal.com",
+  "Perplexity AI",
+  "Plataformas de Venda",
+  "Transferências",
+  "Carrinho Abandonado",
+  "CRM Avançado"
+];
+
 const PricingSection = () => {
-  const features = [
-    {
-      description: "Integração completa com WhatsApp"
-    },
-    {
-
-      description: "Gateway do Mercado Pago integrado"
-    },
-    {
-      description: "Sistema de agendamento Cal.com"
-    },
-    {
-      description: "Consultas inteligentes a sites com Perplexity.ia"
-    },
-    {
-      description: "Integração com Hotmart, Eduzz e Kiwify"
-    },
-    {
-      description: "Sistema de transferências"
-    },
-    {
-      description: "CRM"
-    },
-    {
-      description: "Recuperação de Carrinho automática"
-    }
-  ];
-
   const plans = [
     {
       title: "Plano Anual",
-      price: "299,00",
-      installments: "12x",
+      price: "R$ 297",
+      period: "por mês",
+      totalPrice: "R$ 3.564",
+      features: sharedBenefits.map(title => ({ title })),
       featured: true,
-      link: "https://chk.eduzz.com/E05X8DAKWX"
+      link: "https://checkout.doppus.app/73257821"
     },
     {
       title: "Plano Semestral",
-      price: "399,00",
-      installments: "6x",
-      link: "https://chk.eduzz.com/KW8KV68201"
+      price: "R$ 399",
+      period: "por mês",
+      totalPrice: "R$ 2.394",
+      features: sharedBenefits.map(title => ({ title })),
+      link: "https://checkout.doppus.app/39660707"
     },
     {
       title: "Plano Mensal",
-      price: "499,00",
-      installments: "Mês",
-      link: "https://chk.eduzz.com/Q9N5V15B01"
+      price: "R$ 499",
+      period: "por mês",
+      promotion: true,
+      features: sharedBenefits.map(title => ({ title })),
+      link: "https://checkout.doppus.app/85606372"
     }
   ];
 
@@ -320,83 +337,69 @@ const PricingSection = () => {
 
         <Grid>
           {plans.map((plan, index) => (
-            <ScrollReveal key={index}>
-              <PricingCard
-                featured={plan.featured}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+            <PricingCard
+              key={index}
+              $featured={plan.featured}
+              $promotion={plan.promotion}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ 
+                opacity: 1, 
+                y: 0,
+                transition: { 
+                  duration: 0.5,
+                  delay: index * 0.2 
+                }
+              }}
+              viewport={{ once: true }}
+            >
+              {plan.featured && (
+                <div className="discount-badge">Mais Popular</div>
+              )}
+              <PlanTitle>{plan.title}</PlanTitle>
+              <PriceTag>
+                <div className="current-price">
+                  {plan.price}
+                  <span>/mês</span>
+                  {plan.totalPrice && (
+                    <small>Total: {plan.totalPrice}</small>
+                  )}
+                </div>
+                {plan.promotion && (
+                  <div className="promo-below">Primeiro mês R$ 50</div>
+                )}
+              </PriceTag>
+              <FeatureList>
+                {plan.features.map((feature, idx) => (
+                  <FeatureItem
+                    key={idx}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ 
+                      opacity: 1, 
+                      x: 0,
+                      transition: { 
+                        duration: 0.3,
+                        delay: 0.1 * idx 
+                      }
+                    }}
+                    viewport={{ once: true }}
+                  >
+                    <span className="title">{feature.title}</span>
+                  </FeatureItem>
+                ))}
+              </FeatureList>
+              <PricingButton
+                $featured={plan.featured}
+                $promotion={plan.promotion}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                as="a"
+                href={plan.link}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <TitleContainer>
-                  <PlanTitle>{plan.title}</PlanTitle>
-                </TitleContainer>
-                <PriceTag>
-                  {plan.featured && <div className="discount-badge">Melhor Oferta</div>}
-                  <div className="price-wrapper">
-                    <motion.div 
-                      className="current-price"
-                      whileHover={{ 
-                        scale: 1.1,
-                        transition: { 
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 10
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {plan.installments ? (
-                        <>
-                          {plan.installments} 
-                          <br />
-                          R$ {plan.price}
-                          <br />
-        
-                        </>
-                      ) : (
-                        <>
-                          R$ {plan.price}
-                          <br />
-                          <span>{plan.period}</span>
-                        </>
-                      )}
-                    </motion.div>
-                  </div>
-                </PriceTag>
-                <FeatureList>
-                  {features.map((feature, index) => (
-                    <FeatureItem
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      <div className="title">{feature.title}</div>
-                      <div className="description">{feature.description}</div>
-                    </FeatureItem>
-                  ))}
-                </FeatureList>
-                <PricingButton
-                  as="a"
-                  href={plan.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  featured={plan.featured}
-                  whileHover={{ 
-                    scale: 1.02,
-                    transition: { 
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 10
-                    }
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <span>Quero transformar meu WhatsApp</span>
-                  <i className="fab fa-whatsapp whatsapp-icon"></i>
-                </PricingButton>
-              </PricingCard>
-            </ScrollReveal>
+                Começar Agora
+              </PricingButton>
+            </PricingCard>
           ))}
         </Grid>
       </Container>

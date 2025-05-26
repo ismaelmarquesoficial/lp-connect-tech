@@ -265,7 +265,7 @@ const HeaderContent = styled(Grid)`
 `;
 
 const MainTitle = styled(motion.h1)`
-  font-size: clamp(3.8rem, 4vw, 4.2rem);
+  font-size: clamp(2.8rem, 3.5vw, 3.2rem);
   line-height: 1.1;
   margin-bottom: 1.5rem;
   color: ${colors.white};
@@ -296,17 +296,18 @@ const MainTitle = styled(motion.h1)`
   }
 
   @media (max-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 `;
 
 const Subtitle = styled(motion.p)`
   font-size: clamp(1.2rem, 1.5vw, 1.3rem);
   margin-bottom: 2.5rem;
-  opacity: 0.9;
+  opacity: 0.7;
   max-width: 600px;
   color: ${colors.whiteTransparent};
   line-height: 1.6;
+  font-weight: 300;
 
   @media (max-width: 1024px) {
     margin-left: auto;
@@ -936,12 +937,10 @@ const Header = () => {
             }}
           >
             <MainTitle>
-              Atenda, Conquiste e Venda no WhatsApp {' '}
-              <span>IA de Última Geração</span>
+              Atenda, Conquiste e Venda no <span>WhatsApp</span> e <span>Instagram</span> com IA por apenas <span>R$49,90</span>
             </MainTitle>
             <Subtitle>
-              A Inteligência Artificial que acolhe, interage e atende o teu cliente de maneira totalmente 
-              fluida e humanizada.
+              Chegue antes da concorrência, responda de forma rápida e personalizada, recupere oportunidades perdidas e transforme cada conversa em uma nova venda. Com uma Inteligência Artificial fluida e humanizada, seus atendimentos se tornam automáticos, eficientes e muito mais lucrativos — mesmo quando você está offline.
             </Subtitle>
             <StatsContainer>
               {stats.map((stat, index) => (

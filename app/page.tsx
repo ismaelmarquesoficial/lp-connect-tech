@@ -2,7 +2,6 @@
 
 import styled from 'styled-components';
 import Header from '@/components/Header';
-import ChatSimulation from '@/components/ChatSimulation';
 import BenefitsSection from '@/components/BenefitsSection';
 import AdditionalBenefits from '@/components/AdditionalBenefits';
 import ExclusiveBonus from '@/components/ExclusiveBonus';
@@ -47,11 +46,7 @@ const PageContainer = styled.div`
     content: '';
     position: fixed;
     inset: 0;
-    background: 
-      linear-gradient(90deg, rgba(0,0,0,0.01) 1px, transparent 1px),
-      linear-gradient(rgba(0,0,0,0.01) 1px, transparent 1px);
-    background-size: 20px 20px;
-    opacity: 0.02;
+    background: rgba(0, 0, 0, 0.02);
     z-index: 2;
     pointer-events: none;
   }
@@ -80,7 +75,6 @@ export default function Home() {
     <PageContainer>
       <MainContent>
         <Header />
-        <ChatSimulation />
         <RobotTransition />
         <section id="benefits-section">
           <BenefitsSection />

@@ -187,6 +187,12 @@ const ExclusiveBonus = () => {
       featured: true
     },
     {
+      icon: "fab fa-instagram",
+      title: "Instagram",
+      description: "Integração completa com Instagram para atendimento e gestão de mensagens diretas",
+      featured: true
+    },
+    {
       icon: "fas fa-credit-card",
       title: "Mercado Pago",
       description: "Gateway de pagamento integrado para receber pagamentos de forma segura"
