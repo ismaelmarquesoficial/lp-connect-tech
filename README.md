@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LP Connect Tech
 
-## Getting Started
+Landing page para o serviço de IA no WhatsApp da Connect Tech.
 
-First, run the development server:
+## Estrutura do Projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+lp-connect-tech/
+├── assets/           # Imagens e outros recursos
+├── components/       # Componentes HTML
+├── js/              # Arquivos JavaScript
+│   ├── global.js    # Funcionalidades globais
+│   └── main.js      # Script principal
+├── styles/          # Arquivos CSS
+│   └── global.css   # Estilos globais
+└── index.html       # Página principal
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Requisitos
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Navegador web moderno com suporte a:
+  - CSS Grid e Flexbox
+  - CSS Variables
+  - Intersection Observer API
+  - ES6+ JavaScript
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Instalação
 
-## Learn More
+1. Clone o repositório:
+```bash
+git clone https://github.com/seu-usuario/lp-connect-tech.git
+cd lp-connect-tech
+```
 
-To learn more about Next.js, take a look at the following resources:
+2. Abra o arquivo `index.html` em seu navegador ou use um servidor local.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Para usar um servidor local, você pode usar o Python:
+```bash
+# Python 3
+python -m http.server 8000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Python 2
+python -m SimpleHTTPServer 8000
+```
 
-## Deploy on Vercel
+Ou usar o Node.js com o pacote `http-server`:
+```bash
+npm install -g http-server
+http-server
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Desenvolvimento
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Estrutura de Componentes
+
+Cada componente está em um arquivo HTML separado na pasta `components/`. Os componentes são carregados dinamicamente via JavaScript.
+
+### Estilos
+
+- `styles/global.css`: Contém estilos globais e variáveis CSS
+- Cada componente pode ter seus próprios estilos inline
+
+### JavaScript
+
+- `js/global.js`: Contém funcionalidades compartilhadas como:
+  - Animações no scroll
+  - Scroll suave
+  - Menu ativo
+  - Botão de scroll para o topo
+- `js/main.js`: Script principal que carrega os componentes
+
+## Personalização
+
+### Cores
+
+As cores principais podem ser alteradas editando as variáveis CSS em `styles/global.css`:
+
+```css
+:root {
+    --primary-color: rgb(194, 39, 60);
+    --background-color: #000;
+    --text-color: #fff;
+    --text-color-transparent: rgba(255, 255, 255, 0.7);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+```
+
+### Componentes
+
+Para modificar um componente, edite o arquivo correspondente na pasta `components/`.
+
+## Contribuição
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
+3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`)
+4. Push para a branch (`git push origin feature/nova-feature`)
+5. Crie um Pull Request
+
+## Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
